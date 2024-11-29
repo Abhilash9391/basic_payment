@@ -1,24 +1,21 @@
-import {useEffect , useState} from 'react'
+import { useEffect, useState } from "react"
 import { Button } from "./Button"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { response } from 'express';
+import {User} from './Users'
 
 
-export const Users = ()=>{
-
-    const [users, setUsers] = useState([]);
-    const [filter, setFilter] = useState("");
+export const  Users = ()=>{
+   const [filter ,setFilter] = useState("")
+   const [users, setUsers] = useState([]);
 
 
     useEffect('/',()=>{
         axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter)
          .then(response=>{
-            setUsers(response.data.users)
+            setUsers(response.data.user)
          },[filter])
     })
-
-
     return <>
         <div className="font-bold mt-6 text-lg">
             Users
@@ -32,7 +29,9 @@ export const Users = ()=>{
             {users.map(user => <User user={user} />)}
         </div>
     </>
+
 }
+
 function User({user}) {
     const navigate = useNavigate();
 
